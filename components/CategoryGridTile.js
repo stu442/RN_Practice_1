@@ -1,11 +1,15 @@
 import { View, Pressable, Text, StyleSheet, Platform } from "react-native";
 
 
-function CategoryGridTile({title, color}) {
+function CategoryGridTile({title, color, onPress}) {
     return (
         <View style={styles.gridItem}>
-            <Pressable android_ripple={{ color: '#ccc'}} style={[styles.button]}>
-                <View style={styles.innerContainer}>
+            <Pressable 
+                android_ripple={{ color: '#ccc'}} 
+                style={({pressed}) => [styles.button, pressed ? styles.buttonPressed : null]}
+                onPress={onPress}
+            >
+                <View style={[styles.innerContainer, {backgroundColor: color}]}>
                     <Text style={styles.title}>{title}</Text>
                 </View>
             </Pressable>
@@ -20,10 +24,8 @@ const styles = StyleSheet.create({
         flex: 1,
         margin: 16,
         height: 150,
-        borderRadius: 8,
         elevation: 4,
         // 그림자를 위해 추가
-        backgroundColor: 'white',
         // IOS는 이런식으로 그림자가 추가가능하지만,
         // 반드시 backgroundColor가 있어야한다.
         shadowColor: 'black',
@@ -46,5 +48,8 @@ const styles = StyleSheet.create({
     title: {
         fontWeight: 'bold',
         fontSize: 18
+    },
+    buttonPressed: {
+        opacity: 0.5
     }
 })
